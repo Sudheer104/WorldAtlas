@@ -14,8 +14,6 @@ const Register = () => {
 
   const [errors, setErrors] = useState({})
 
-
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -29,143 +27,108 @@ const Register = () => {
     try {
       const response = await AuthService.register(formData);
       const data = response.data;
-      // console.log(data);
       alert(data.msg);
       if (data.success) {
         navigate('/login', { replace: true });
       }
     } catch (error) {
-      // console.log(error);
-      // alert("There was an error registering! "+error.message)
       if (error.response && (error.response.status === 400 || error.response.status === 401)) {
         if (error.response.data.errors) {
-
           const apiErrors = error.response.data.errors;
           const newErrors = {};
           apiErrors.forEach((apiError) => {
             newErrors[apiError.path] = apiError.msg;
           });
-
-          setErrors(newErrors)
-
+          setErrors(newErrors);
         } else {
           alert(error.response.data.msg ? error.response.data.msg : error.message);
         }
       } else {
         alert(error.message);
       }
-
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <form onSubmit={handleSubmit}
-       className="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-sm">
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-            Enter Name
-          </label>
+    <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f7fafc', padding: '0 1rem' }}>
+      <form onSubmit={handleSubmit} style={{ backgroundColor: 'white', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', borderRadius: '8px', padding: '2rem', width: '100%', maxWidth: '400px' }}>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <label htmlFor="name" style={{ display: 'block', color: '#4a5568', fontSize: '24px', fontWeight: 'bold', marginBottom: '0.75rem' }}>Enter Name</label>
           <input
             type="text"
-            id="text"
+            id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter your name"
-            // required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{ width: '100%', padding: '1rem', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '20px', color: '#4a5568', outline: 'none' }}
           />
-          {errors.name && <div className="text-red-700 font-bold ">{errors.name}</div>}
+          {errors.name && <div style={{ color: '#e53e3e', fontWeight: 'bold', fontSize: '20px' }}>{errors.name}</div>}
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-            Select image
-          </label>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <label htmlFor="image" style={{ display: 'block', color: '#4a5568', fontSize: '24px', fontWeight: 'bold', marginBottom: '0.75rem' }}>Select image</label>
           <input
             type="file"
-            id="file"
+            id="image"
             onChange={(e) => setImage(e.target.files[0])}
-            className="cursor-pointer shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{ width: '100%', padding: '1rem', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '20px', color: '#4a5568', outline: 'none', cursor: 'pointer' }}
           />
-                    {errors.image && <div className="text-red-700 font-bold ">{errors.image}</div>}
-
+          {errors.image && <div style={{ color: '#e53e3e', fontWeight: 'bold', fontSize: '20px' }}>{errors.image}</div>}
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-            Your Email
-          </label>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <label htmlFor="email" style={{ display: 'block', color: '#4a5568', fontSize: '24px', fontWeight: 'bold', marginBottom: '0.75rem' }}>Your Email</label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="email@gmail.com"
-            // required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{ width: '100%', padding: '1rem', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '20px', color: '#4a5568', outline: 'none' }}
           />
-                    {errors.email && <div className="text-red-700 font-bold ">{errors.email}</div>}
-
+          {errors.email && <div style={{ color: '#e53e3e', fontWeight: 'bold', fontSize: '20px' }}>{errors.email}</div>}
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="number" className="block text-gray-700 text-sm font-bold mb-2">
-            Enter Mobile No.
-          </label>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <label htmlFor="mobile" style={{ display: 'block', color: '#4a5568', fontSize: '24px', fontWeight: 'bold', marginBottom: '0.75rem' }}>Enter Mobile No.</label>
           <input
             type="tel"
-            id="number"
+            id="mobile"
             value={mobile}
             onChange={(e) => setMobile(e.target.value)}
             placeholder="Enter mobile number"
-            // required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{ width: '100%', padding: '1rem', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '20px', color: '#4a5568', outline: 'none' }}
           />
-                    {errors.mobile && <div className="text-red-700 font-bold ">{errors.mobile}</div>}
-
+          {errors.mobile && <div style={{ color: '#e53e3e', fontWeight: 'bold', fontSize: '20px' }}>{errors.mobile}</div>}
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-            Your password
-          </label>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <label htmlFor="password" style={{ display: 'block', color: '#4a5568', fontSize: '24px', fontWeight: 'bold', marginBottom: '0.75rem' }}>Your password</label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            // required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{ width: '100%', padding: '1rem', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '20px', color: '#4a5568', outline: 'none' }}
           />
-                    {errors.password && <div className="text-red-700 font-bold ">{errors.password}</div>}
-
-        </div>
-
-        <div className="mb-4 flex items-center">
-          <input
-            id="remember"
-            type="checkbox"
-            className="mr-2 leading-tight"
-          // required
-          />
-          <label htmlFor="remember" className="text-sm text-gray-700">
-            Remember me
-          </label>
+          {errors.password && <div style={{ color: '#e53e3e', fontWeight: 'bold', fontSize: '20px' }}>{errors.password}</div>}
         </div>
 
         <button
           type="submit"
-          className=" cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+          style={{ backgroundColor: '#3182ce', color: 'white', padding: '1rem', borderRadius: '4px', fontWeight: 'bold', width: '100%', cursor: 'pointer', border: 'none', fontSize: '20px' }}
         >
           Register
         </button>
-        <p className="text-blue-800 mt-2" >You have an account <Link className="text-pink-800" to="/login"> Login </Link> </p>
+
+        <p style={{ color: '#2b6cb0', marginTop: '1.5rem', fontSize: '20px' }}>
+          You have an account
+          <Link to="/login" style={{ color: '#d53f8c', fontSize: '20px' }}> Login </Link>
+        </p>
       </form>
     </div>
   );
-}
+};
 
 export default Register;
-
 

@@ -3,10 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../../Services/AuthService";
 
 const Login = () => {
-
   const navigate = useNavigate();
 
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -16,116 +14,87 @@ const Login = () => {
     event.preventDefault();
     setErrors({});
 
-    //Create a formData to send in backend
+    // Create a formData to send in backend
     const formData = new FormData();
     formData.append('email', email);
     formData.append('password', password);
-
 
     try {
       const response = await AuthService.login({ email, password });
       const data = response.data;
       if (data.success) {
-        // console.log(data);
         AuthService.loginUser(data);
         setIsLoggedIn(true);
       } else {
         alert(errors.msg);
       }
-  } catch (error) {
-    // console.log(error);
-    // alert("There was an error registering! "+error.message)
-    if (error.response && (error.response.status === 400 || error.response.status === 401)) {
-      if (error.response.data.errors) {
-
-        const apiErrors = error.response.data.errors;
-        const newErrors = {};
-        apiErrors.forEach((apiError) => {
-          newErrors[apiError.path] = apiError.msg;
-        });
-
-        setErrors(newErrors)
-
+    } catch (error) {
+      if (error.response && (error.response.status === 400 || error.response.status === 401)) {
+        if (error.response.data.errors) {
+          const apiErrors = error.response.data.errors;
+          const newErrors = {};
+          apiErrors.forEach((apiError) => {
+            newErrors[apiError.path] = apiError.msg;
+          });
+          setErrors(newErrors);
+        } else {
+          alert(error.response.data.msg ? error.response.data.msg : error.message);
+        }
       } else {
-        alert(error.response.data.msg ? error.response.data.msg : error.message);
+        alert(error.message);
       }
-    } else {
-      alert(error.message);
     }
-
-  }
   };
 
-  useEffect(()=>{
-    if(isLoggedIn){
-      navigate('/layout/home',{replace:true});
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/layout/home', { replace: true });
     }
-  },[isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <form onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-sm">
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-            Your email
-          </label>
+    <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f7fafc', padding: '0 1rem' }}>
+      <form onSubmit={handleSubmit} style={{ backgroundColor: 'white', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', borderRadius: '8px', padding: '2rem', width: '100%', maxWidth: '400px' }}>
+        <div style={{ marginBottom: '1.5rem' }}>
+          <label htmlFor="email" style={{ display: 'block', color: '#4a5568', fontSize: '24px', fontWeight: 'bold', marginBottom: '0.75rem' }}>Your email</label>
           <input
             type="email"
             id="email"
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{ width: '100%', padding: '1rem', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '20px', color: '#4a5568', outline: 'none' }}
           />
-
-          {errors.email && <div className="text-red-700 font-bold ">{errors.email}</div>}
-
-
+          {errors.email && <div style={{ color: '#e53e3e', fontWeight: 'bold', fontSize: '20px' }}>{errors.email}</div>}
         </div>
-        <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-            Your password
-          </label>
+
+        <div style={{ marginBottom: '1.5rem' }}>
+          <label htmlFor="password" style={{ display: 'block', color: '#4a5568', fontSize: '24px', fontWeight: 'bold', marginBottom: '0.75rem' }}>Your password</label>
           <input
             type="password"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+            style={{ width: '100%', padding: '1rem', borderRadius: '4px', border: '1px solid #e2e8f0', fontSize: '20px', color: '#4a5568', outline: 'none' }}
           />
-
-          {errors.password && <div className="text-red-700 font-bold ">{errors.password}</div>}
-
-
+          {errors.password && <div style={{ color: '#e53e3e', fontWeight: 'bold', fontSize: '20px' }}>{errors.password}</div>}
         </div>
-        {/* <div className="mb-4 flex items-center">
-          <input
-            id="remember"
-            type="checkbox"
-            className="mr-2 leading-tight"
-          />
-          <label htmlFor="remember" className="text-sm text-gray-700">
-            Remember me
-          </label>
-        </div> */}
+
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 w-full"
+          style={{ backgroundColor: '#3182ce', color: 'white', padding: '1rem', borderRadius: '4px', fontWeight: 'bold', width: '100%', cursor: 'pointer', border: 'none', fontSize: '20px' }}
         >
           Submit
         </button>
-        <p className="text-blue-800 mt-2 " >
-          Don't have an account 
-          <Link className="text-pink-800" to="/register"> Register </Link><br />
-          <Link className="text-pink-800" to="/forget-password"> Forget Password </Link> 
-           </p>
+
+        <p style={{ color: '#2b6cb0', marginTop: '1.5rem', fontSize: '20px' }}>
+          Don't have an account
+          <Link to="/register" style={{ color: '#d53f8c', fontSize: '20px' }}> Register </Link><br />
+          <Link to="/forget-password" style={{ color: '#d53f8c', fontSize: '20px' }}> Forget Password </Link>
+        </p>
       </form>
     </div>
   );
 };
 
 export default Login;
-
-
-

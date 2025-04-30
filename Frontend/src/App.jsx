@@ -1,6 +1,6 @@
 import React from 'react'
-import './App.css'
 import './index.css'
+import './App.css'
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import Home from './Pages/Home';
 import About from './Pages/About';
@@ -9,7 +9,6 @@ import Contact from './Pages/Contact';
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
 
-// import Layout from './components/Layouts/Layout'
 import AuthService from './Services/AuthService';
 import UpdateProfile from './Pages/UpdateProfile';
 import ForgetPassword from './components/Forget Password/ForgetPassword';

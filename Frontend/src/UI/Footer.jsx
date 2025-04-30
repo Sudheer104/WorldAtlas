@@ -43,8 +43,8 @@ function Footer() {
             <div className="copyright-text">
               <p>
                 Copyright &copy; 2024, All Right Reserved
-                <NavLink to="https://thapatechnical.shop/" target="_blank">
-                  ThapaTechnical
+                <NavLink to="/layout/home" target="_blank">
+                  Chill Bro
                 </NavLink>
               </p>
             </div>
@@ -57,7 +57,7 @@ function Footer() {
 
                 <li>
                   <NavLink
-                    to="https://www.instagram.com/thapatechnical/"
+                    to="/layout/home"
                     target="_blank"
                   >
                     Social
@@ -65,7 +65,7 @@ function Footer() {
                 </li>
                 <li>
                   <NavLink
-                    to="https://thapatechnical.shop/source-code"
+                    to="/layout/home"
                     target="_blank"
                   >
                     Source Code
